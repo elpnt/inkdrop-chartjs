@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    ".CodeMirror": [
+      {
+        "label": "Toggle chartjs",
+        "command": "chartjs:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Plugins",
+      "submenu": [
+        {
+          "label": "chartjs",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "chartjs:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
