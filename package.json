@@ -1,28 +1,40 @@
 {
-  "name": "chartjs",
-  "main": "./lib/chartjs",
+  "name": "inkdrop-chartjs",
+  "main": "./lib/index",
   "version": "0.0.0",
   "description": "Inkdrop Chart.js",
   "keywords": [],
   "repository": "https://github.com/elpnt/inkdrop-chartjs",
   "license": "MIT",
+  "scripts": {
+    "build": "babel src/ -d lib/"
+  },
   "engines": {
     "inkdrop": "^4.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chart.js": "^2.9.3",
+    "react-chartjs-2": "^2.9.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@types/node": "^14.0.13",
     "@types/react": "^16.9.36",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",
+    "lodash": "^4.17.15",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
