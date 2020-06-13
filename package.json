@@ -1,8 +1,8 @@
 {
-  "name": "inkdrop-chartjs",
+  "name": "chartjs",
   "main": "./lib/index",
   "version": "0.0.0",
-  "description": "Inkdrop Chart.js",
+  "description": "A plugin for drawing chart with Chart.js",
   "keywords": [],
   "repository": "https://github.com/elpnt/inkdrop-chartjs",
   "license": "MIT",
