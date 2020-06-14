@@ -41,11 +41,11 @@ This will be rendered as
 A JSON file you write in code blocks will be parsed with JavaScript function `JSON.parse()`. So you cannot write code as JavaScript object format which allows trailing commas or single quote string. This will cause `SyntaxError`.
 
 
-**❌Bad**
+**❌ Bad**
 ````
 ```chart
 {
-    type: "pie",
+    type: 'pie',
     data: {
         labels: ['Foo', 'Bar', 'Baz',],
         ...
@@ -54,7 +54,7 @@ A JSON file you write in code blocks will be parsed with JavaScript function `JS
 ```
 ````
 
-**✔️Good**
+**✔️ Good**
 ````
 ```chart
 {
