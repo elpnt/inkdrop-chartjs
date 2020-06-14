@@ -1,3 +1,5 @@
+'use babel';
+
 import * as React from 'react';
 import Chart from 'chart.js';
 import { markdownRenderer } from 'inkdrop';
