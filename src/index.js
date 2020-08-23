@@ -21,10 +21,10 @@ class ChartComponent extends React.Component {
     super(props);
     this.chartRef = React.createRef();
     this.state = {
-      prevCode: null,
-      chart: null,
+      prevCode: null, // previous JSON config code
+      chart: null, // Chart object
       canvasId: uuidv4(), // hash ID to give to the canvas
-      imageURL: null,
+      imageURL: null, // PNG image URL converted from the canvas
       error: null,
     };
   }
@@ -71,12 +71,22 @@ class ChartComponent extends React.Component {
 
   render() {
     const { imageURL, error } = this.state;
+    const bodyWidth = document.getElementsByClassName('mde-preview')[0]
+      .clientWidth;
+
     return (
       <div ref={this.chartRef}>
         {error ? (
           <ChartError error={error} />
         ) : (
-          <img src={imageURL} style={{ backgroundColor: 'transparent' }} />
+          <img
+            src={imageURL}
+            style={{
+              backgroundColor: 'transparent',
+              width: bodyWidth,
+              height: 'auto',
+            }}
+          />
         )}
         <canvas style={{ display: 'none' }} />
       </div>
