@@ -11,7 +11,7 @@ ipm install chartjs
 
 ## Usage
 
-Following [Chart.js usage](https://www.chartjs.org/docs/latest/getting-started/usage.html), write JSON to pass to `Chart` object.
+Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-started/usage.html), write JSON config to be passed into `Chart(ctx, config)` object as a second parameter.
 
 ````
 ```chart
@@ -38,10 +38,16 @@ This will be rendered as
 
 ### NOTE
 
-A JSON file you write in code blocks will be parsed with JavaScript function `JSON.parse()`. So you cannot write code as JavaScript object format which allows trailing commas or single quote string. This will cause `SyntaxError`.
+A JSON config you write in code blocks will be parsed with JavaScript function `JSON.parse()`. So you cannot write code in JavaScript object format which allows 
+
+- trailing commas
+- single quoted string
+- key string without double quotes
+
+and so on. These will cause `SyntaxError`.
 
 
-**❌ Bad**
+**❌Bad**
 ````
 ```chart
 {
@@ -54,7 +60,7 @@ A JSON file you write in code blocks will be parsed with JavaScript function `JS
 ```
 ````
 
-**✔️ Good**
+**✔️Good**
 ````
 ```chart
 {
