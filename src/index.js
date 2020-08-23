@@ -1,7 +1,8 @@
 'use babel';
 
-import * as React from 'react';
+import React from 'react';
 import Chart from 'chart.js';
+import { v4 as uuidv4 } from 'uuid';
 import { markdownRenderer } from 'inkdrop';
 
 function ChartError(props) {
@@ -20,17 +21,21 @@ class ChartComponent extends React.Component {
     super(props);
     this.chartRef = React.createRef();
     this.state = {
-      prevCode: null,
-      chart: null,
+      prevCode: null, // previous JSON config code
+      chart: null, // Chart object
+      canvasId: uuidv4(), // hash ID to give to the canvas
+      imageURL: null, // PNG image URL converted from the canvas
       error: null,
     };
   }
 
   componentDidMount() {
+    this.chartRef.current.lastChild.id = this.state.canvasId;
     this.renderChart();
   }
 
   componentDidUpdate(prevProps) {
+    // `props.children` is the json code you write in ```chart``` block.
     if (this.props.children[0] != prevProps.children[0]) {
       this.destroyChart();
       this.renderChart();
@@ -46,24 +51,44 @@ class ChartComponent extends React.Component {
   renderChart() {
     try {
       const code = this.props.children[0];
-      const json = JSON.parse(code);
-      const chart = new Chart(this.chartRef.current.lastChild, json);
+      const config = JSON.parse(code);
+      const canvas = this.chartRef.current.lastChild;
+      const chart = new Chart(canvas, config);
+      chart.update({
+        duration: 0,
+      });
+
       this.setState({
         prevCode: code,
         chart: chart,
+        imageURL: chart.toBase64Image(),
         error: null,
       });
     } catch (e) {
-      this.setState({ error: e });
+      this.setState({ prevCode: null, chart: null, error: e });
     }
   }
 
   render() {
-    const { error } = this.state;
+    const { imageURL, error } = this.state;
+    const bodyWidth = document.getElementsByClassName('mde-preview')[0]
+      .clientWidth;
+
     return (
       <div ref={this.chartRef}>
-        {error ? <ChartError error={error} /> : null}
-        <canvas className={error ? 'hiddenCanvas' : null} />
+        {error ? (
+          <ChartError error={error} />
+        ) : (
+          <img
+            src={imageURL}
+            style={{
+              backgroundColor: 'transparent',
+              width: bodyWidth,
+              height: 'auto',
+            }}
+          />
+        )}
+        <canvas style={{ display: 'none' }} />
       </div>
     );
   }
@@ -73,5 +98,4 @@ module.exports = {
   activate() {
     markdownRenderer.remarkCodeComponents['chart'] = ChartComponent;
   },
-  deactivate() {},
 };
