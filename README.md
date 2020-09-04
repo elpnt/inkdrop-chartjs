@@ -1,5 +1,8 @@
 # Chart.js
-A plugin for drawing chart with [Chart.js](https://www.chartjs.org/)
+![Inkdrop Plugin Version](https://inkdrop-plugin-badge.vercel.app/api/version/chartjs&style=flat)
+![Inkdrop Plugin Downloads](https://inkdrop-plugin-badge.vercel.app/api/downloads/chartjs&style=flat)
+
+An Inkdrop plugin for drawing a chart with [Chart.js](https://www.chartjs.org/)
 
 ![sample](./img/sample.png)
 
