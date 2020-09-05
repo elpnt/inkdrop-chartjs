@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Chart from 'chart.js';
+import RJSON from 'relaxed-json';
 import { v4 as uuidv4 } from 'uuid';
 import { markdownRenderer } from 'inkdrop';
 
@@ -50,7 +51,7 @@ class ChartComponent extends React.Component {
 
   renderChart() {
     try {
-      const code = this.props.children[0];
+      const code = RJSON.transform(this.props.children[0]);
       const config = JSON.parse(code);
       const canvas = this.chartRef.current.lastChild;
       const chart = new Chart(canvas, config);

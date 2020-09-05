@@ -14,20 +14,34 @@ ipm install chartjs
 
 ## Usage
 
-Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-started/usage.html), write JSON config to be passed into `Chart(ctx, config)` object as a second parameter.
+Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-started/usage.html), write a JSON config to be passed into `Chart(ctx, config)` object as a second parameter.
+
+**NOTE**
+
+Since the version 1.1.0, this plugin allows [Relaxed-JSON](http://oleg.fi/relaxed-json) instead of strict vanilla JSON format. It is allowed to use
+
+- comments in JSON
+- trailing commas
+- single quote strings
+- strings without single/double quotes
+
+and so on.
+
+**Example**
 
 ````
 ```chart
 {
-    "type": "pie",
-    "data": {
-        "labels": ["Foo", "Bar", "Baz"],
-        "datasets": [{
-            "data": [40, 32, 22],
-            "backgroundColor": [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
+    type: pie, 
+    data: {
+        // we are given three data
+        labels: [Foo, Bar, Baz],
+        datasets: [{
+            data: [40, 32, 22],
+            backgroundColor: [
+                #FF6384,
+                #36A2EB,
+                #FFCE56,
             ]
         }]
     }
@@ -39,39 +53,26 @@ This will be rendered as
 
 ![pie chart example](./img/pie.png)
 
-### NOTE
+Also you can write in a strict JSON format such as
 
-A JSON config you write in code blocks will be parsed with JavaScript function `JSON.parse()`. So you cannot write code in JavaScript object format which allows 
-
-- trailing commas
-- single quoted string
-- key string without double quotes
-
-and so on. These will cause `SyntaxError`.
-
-
-**❌Bad**
 ````
-```chart
 {
-    type: 'pie',
-    data: {
-        labels: ['Foo', 'Bar', 'Baz',],
-        ...
-    }
-}
-```
-````
-
-**✔️Good**
-````
-```chart
-{
-    "type": "pie",
+    "type": "pie", 
     "data": {
         "labels": ["Foo", "Bar", "Baz"],
-        ...
+        "datasets: [{
+            "data": [40, 32, 22],
+            "backgroundColor": [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
     }
 }
-```
 ````
+
+## CHANGELOG
+
+- 1.1.0
+  - allow Relaxed-JSON format

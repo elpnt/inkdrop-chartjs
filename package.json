@@ -2,7 +2,7 @@
   "name": "chartjs",
   "main": "./lib/index",
   "version": "1.0.1",
-  "description": "A plugin for drawing chart with Chart.js",
+  "description": "Inkdrop plugin for drawing a chart with Chart.js",
   "keywords": [],
   "repository": "https://github.com/elpnt/inkdrop-chartjs",
   "license": "MIT",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "chart.js": "^2.9.3",
+    "relaxed-json": "^1.0.3",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
