@@ -2,7 +2,7 @@
 ![Inkdrop Plugin Version](https://inkdrop-plugin-badge.vercel.app/api/version/chartjs&style=flat)
 ![Inkdrop Plugin Downloads](https://inkdrop-plugin-badge.vercel.app/api/downloads/chartjs&style=flat)
 
-An Inkdrop plugin for drawing a chart with [Chart.js](https://www.chartjs.org/)
+Inkdrop plugin for drawing a chart with [Chart.js](https://www.chartjs.org/)
 
 ![sample](./img/sample.png)
 
@@ -18,7 +18,7 @@ Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-start
 
 **NOTE**
 
-Since the version 1.1.0, this plugin allows [Relaxed-JSON](http://oleg.fi/relaxed-json) instead of strict vanilla JSON format. It is allowed to use
+Since the version 1.1.0, this plugin allows [Relaxed-JSON](http://oleg.fi/relaxed-json) instead of a strict vanilla JSON format. It is allowed to use
 
 - comments in JSON
 - trailing commas
@@ -55,7 +55,7 @@ This will be rendered as
 
 Also you can write in a strict JSON format such as
 
-````
+```
 {
     "type": "pie", 
     "data": {
@@ -70,9 +70,12 @@ Also you can write in a strict JSON format such as
         }]
     }
 }
-````
+```
 
 ## CHANGELOG
+
+- 1.2.0
+  - JSON syntax highlight in a fenced code block
 
 - 1.1.0
   - allow Relaxed-JSON format
