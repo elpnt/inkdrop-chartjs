@@ -1,9 +1,8 @@
 'use babel';
 
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Chart from 'chart.js';
 import RJSON from 'relaxed-json';
-import { v4 as uuidv4 } from 'uuid';
 
 function ChartError(props) {
   return (
@@ -16,82 +15,75 @@ function ChartError(props) {
   );
 }
 
-class ChartComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.chartRef = React.createRef();
-    this.state = {
-      prevCode: null, // previous JSON config code
-      chart: null, // Chart object
-      canvasId: uuidv4(), // hash ID to give to the canvas
-      imageURL: null, // PNG image URL converted from the canvas
-      error: null,
-    };
-  }
+const getWidth = () => {
+  document.getElementsByClassName('mde-preview')[0].clientWidth;
+};
 
-  componentDidMount() {
-    this.chartRef.current.lastChild.id = this.state.canvasId;
-    this.renderChart();
-  }
+function ChartComponent(props) {
+  const [chart, setChart] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const [error, setError] = useState(null);
+  const [width, setWidth] = useState(getWidth());
+  const chartRef = useRef(null);
 
-  componentDidUpdate(prevProps) {
-    // `props.children` is the json code you write in ```chart``` block.
-    if (this.props.children[0] != prevProps.children[0]) {
-      this.destroyChart();
-      this.renderChart();
-    }
-  }
+  const destroyChart = () => {
+    if (chart) chart.destroy();
+  };
 
-  destroyChart() {
-    if (this.state.chart) {
-      this.state.chart.destroy();
-    }
-  }
-
-  renderChart() {
+  const renderChart = () => {
     try {
-      const code = RJSON.transform(this.props.children[0]);
-      const config = JSON.parse(code);
-      const canvas = this.chartRef.current.lastChild;
-      const chart = new Chart(canvas, config);
-      chart.update({
+      const config = JSON.parse(RJSON.transform(props.children[0]));
+      const canvas = chartRef.current.lastChild;
+      const newChart = new Chart(canvas, config);
+      newChart.update({
         duration: 0,
       });
-
-      this.setState({
-        prevCode: code,
-        chart: chart,
-        imageURL: chart.toBase64Image(),
-        error: null,
-      });
+      setChart(newChart);
+      setImageUrl(newChart.toBase64Image());
+      setError(null);
     } catch (e) {
-      this.setState({ prevCode: null, chart: null, error: e });
+      setChart(null);
+      setError(e);
     }
-  }
+  };
 
-  render() {
-    const { imageURL, error } = this.state;
-    const bodyWidth = document.getElementsByClassName('mde-preview')[0]
-      .clientWidth;
+  // render/rerender when the code changed
+  useEffect(() => {
+    destroyChart();
+    renderChart();
+  }, [props.children[0]]);
 
-    return (
-      <div ref={this.chartRef}>
-        {error ? (
-          <ChartError error={error} />
-        ) : (
-          <img
-            src={imageURL}
-            style={{
-              backgroundColor: 'transparent',
-              width: bodyWidth,
-              height: 'auto',
-            }}
-          />
-        )}
-        <canvas style={{ display: 'none' }} />
-      </div>
-    );
-  }
+  // rerender when the window size changed
+  useEffect(() => {
+    const callback = (event) => {
+      setWidth(getWidth());
+      destroyChart();
+      renderChart();
+    };
+    window.addEventListener('resize', callback);
+    return () => {
+      window.removeEventListener('resize', callback);
+    };
+  });
+
+  return (
+    <div class="chartjs" ref={chartRef}>
+      {error ? (
+        <ChartError error={error} />
+      ) : (
+        <img
+          src={imageUrl}
+          style={{
+            backgroundColor: 'transparent',
+            width: document.getElementsByClassName('mde-preview')[0]
+              .clientWidth,
+            height: 'auto',
+          }}
+        />
+      )}
+      <canvas style={{ display: 'none' }} />
+    </div>
+  );
 }
 
 export default ChartComponent;

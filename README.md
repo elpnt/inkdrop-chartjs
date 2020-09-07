@@ -18,30 +18,22 @@ Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-start
 
 **NOTE**
 
-Since the version 1.1.0, this plugin allows [Relaxed-JSON](http://oleg.fi/relaxed-json) instead of a strict vanilla JSON format. It is allowed to use
-
-- comments in JSON
-- trailing commas
-- single quote strings
-- strings without single/double quotes
-
-and so on.
+Since the version 1.1.0, this plugin allows [Relaxed-JSON](http://oleg.fi/relaxed-json) instead of a strict vanilla JSON format. You can write a config the same way as a JavaScript object format.
 
 **Example**
 
 ````
 ```chart
 {
-    type: pie, 
+    type: 'pie', 
     data: {
-        // we are given three data
-        labels: [Foo, Bar, Baz],
+        labels: ['Foo', 'Bar', 'Baz'],
         datasets: [{
             data: [40, 32, 22],
             backgroundColor: [
-                #FF6384,
-                #36A2EB,
-                #FFCE56,
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
             ]
         }]
     }
@@ -73,6 +65,10 @@ Also you can write in a strict JSON format such as
 ```
 
 ## CHANGELOG
+
+- 1.3.0
+  - [refactor] converted the original React class component to a functional component
+  - [update] rerender when whe Inkdrop window resized
 
 - 1.2.0
   - JSON syntax highlight in a fenced code block
