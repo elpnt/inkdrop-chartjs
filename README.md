@@ -2,7 +2,7 @@
 ![Inkdrop Plugin Version](https://inkdrop-plugin-badge.vercel.app/api/version/chartjs&style=flat)
 ![Inkdrop Plugin Downloads](https://inkdrop-plugin-badge.vercel.app/api/downloads/chartjs&style=flat)
 
-Inkdrop plugin for drawing a chart with [Chart.js](https://www.chartjs.org/)
+Inkdrop plugin for drawing charts with [Chart.js](https://www.chartjs.org/)
 
 ![sample](./img/sample.png)
 
@@ -67,7 +67,7 @@ Also you can write in a strict JSON format as follows
 ## CHANGELOG
 
 - 1.3.0
-  - re-render responsively when whe preview pane is resized
+  - re-render responsively when the preview pane is resized
 
 - 1.2.0
   - JSON syntax highlight in a fenced code block
