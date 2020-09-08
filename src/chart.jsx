@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Chart from 'chart.js';
 import RJSON from 'relaxed-json';
+import useResizeAware from 'react-resize-aware';
 
 function ChartError(props) {
   return (
@@ -15,16 +16,12 @@ function ChartError(props) {
   );
 }
 
-const getWidth = () => {
-  document.getElementsByClassName('mde-preview')[0].clientWidth;
-};
-
 function ChartComponent(props) {
   const [chart, setChart] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState(null);
-  const [width, setWidth] = useState(getWidth());
   const chartRef = useRef(null);
+  const [resizeListener, divSize] = useResizeAware();
 
   const destroyChart = () => {
     if (chart) chart.destroy();
@@ -53,21 +50,18 @@ function ChartComponent(props) {
     renderChart();
   }, [props.children[0]]);
 
-  // rerender when the window size changed
+  // rerender when the preview pane size changed
   useEffect(() => {
-    const callback = (event) => {
-      setWidth(getWidth());
+    const responsive = inkdrop.config.get('chartjs.responsive');
+    if (responsive) {
       destroyChart();
       renderChart();
-    };
-    window.addEventListener('resize', callback);
-    return () => {
-      window.removeEventListener('resize', callback);
-    };
-  });
+    }
+  }, [divSize.width]);
 
   return (
     <div class="chartjs" ref={chartRef}>
+      {resizeListener}
       {error ? (
         <ChartError error={error} />
       ) : (

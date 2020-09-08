@@ -45,7 +45,7 @@ This will be rendered as
 
 ![pie chart example](./img/pie.png)
 
-Also you can write in a strict JSON format such as
+Also you can write in a strict JSON format as follows
 
 ```
 {
@@ -67,8 +67,7 @@ Also you can write in a strict JSON format such as
 ## CHANGELOG
 
 - 1.3.0
-  - [refactor] converted the original React class component to a functional component
-  - [update] rerender when whe Inkdrop window resized
+  - re-render responsively when whe preview pane is resized
 
 - 1.2.0
   - JSON syntax highlight in a fenced code block
