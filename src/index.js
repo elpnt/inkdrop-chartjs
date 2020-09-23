@@ -1,28 +1,28 @@
-'use babel';
+"use babel";
 
-import ChartComponent from './chart';
-import { markdownRenderer } from 'inkdrop';
-import CodeMirror from 'codemirror';
+import ChartComponent from "./chart";
+import { markdownRenderer } from "inkdrop";
+import CodeMirror from "codemirror";
 
 const CHART_MODE_INFO = {
-  name: 'chart',
-  mime: 'application/json',
-  mode: 'javascript',
+  name: "chart",
+  mime: "application/json",
+  mode: "javascript",
 };
 
 module.exports = {
   config: {
     responsive: {
-      title: 'Responsive re-rendering (default: ON)',
-      description: 'Re-render a chart when the preview window is resized',
-      type: 'boolean',
+      title: "Responsive re-rendering (default: ON)",
+      description: "Re-render a chart when the preview pane is resized",
+      type: "boolean",
       default: true,
     },
   },
 
   activate() {
     if (markdownRenderer) {
-      markdownRenderer.remarkCodeComponents['chart'] = ChartComponent;
+      markdownRenderer.remarkCodeComponents["chart"] = ChartComponent;
     }
     if (CodeMirror) {
       CodeMirror.modeInfo.push(CHART_MODE_INFO);

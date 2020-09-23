@@ -14,7 +14,7 @@ ipm install chartjs
 
 ## Usage
 
-Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-started/usage.html), write a JSON config to be passed into `Chart(ctx, config)` object as a second parameter.
+Following the [Chart.js usage](https://www.chartjs.org/docs/latest/getting-started/usage.html), write a JSON config to be passed into `Chart(ctx, config)` object as a second argument.
 
 **NOTE**
 
@@ -47,7 +47,8 @@ This will be rendered as
 
 Also you can write in a strict JSON format as follows
 
-```
+````
+```chart
 {
     "type": "pie", 
     "data": {
@@ -63,6 +64,7 @@ Also you can write in a strict JSON format as follows
     }
 }
 ```
+````
 
 ## CHANGELOG
 

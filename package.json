@@ -2,18 +2,26 @@
   "name": "chartjs",
   "main": "./lib/index",
   "version": "1.3.0",
-  "description": "Inkdrop plugin for drawing a chart with Chart.js",
+  "description": "Inkdrop plugin for drawing charts with Chart.js",
   "keywords": [],
   "repository": "https://github.com/elpnt/inkdrop-chartjs",
   "license": "MIT",
   "scripts": {
-    "build": "babel src/ -d lib/"
+    "build": "babel src/ -d lib/",
+    "watch": "babel -w src/ -d lib/",
+    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint:eslint": "eslint --format codeframe 'src/**'",
+    "lint:prettier": "prettier --check --ignore-path .gitignore '**/*.{less,yml,json}'",
+    "fix": "yarn fix:eslint && yarn fix:prettier",
+    "fix:eslint": "yarn lint:eslint --fix",
+    "fix:prettier": "prettier --write --ignore-path .gitignore '**/*.{less,yml,json}'"
   },
   "engines": {
     "inkdrop": "^4.x"
   },
   "dependencies": {
     "chart.js": "^2.9.3",
+    "prop-types": "^15.7.2",
     "react-resize-aware": "^3.0.1",
     "relaxed-json": "^1.0.3"
   },
@@ -33,8 +41,5 @@
     "eslint-plugin-react-hooks": "^4.1.0",
     "lodash": "^4.17.19",
     "prettier": "^2.0.5"
-  },
-  "prettier": {
-    "singleQuote": true
   }
 }

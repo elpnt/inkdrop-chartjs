@@ -1,9 +1,10 @@
-'use babel';
+"use babel";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import Chart from 'chart.js';
-import RJSON from 'relaxed-json';
-import useResizeAware from 'react-resize-aware';
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes, { string } from "prop-types";
+import Chart from "chart.js";
+import RJSON from "relaxed-json";
+import useResizeAware from "react-resize-aware";
 
 function ChartError(props) {
   return (
@@ -16,9 +17,16 @@ function ChartError(props) {
   );
 }
 
+ChartError.propTypes = {
+  error: PropTypes.shape({
+    name: string,
+    message: string,
+  }),
+};
+
 function ChartComponent(props) {
   const [chart, setChart] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState(null);
   const chartRef = useRef(null);
   const [resizeListener, divSize] = useResizeAware();
@@ -52,7 +60,7 @@ function ChartComponent(props) {
 
   // rerender when the preview pane size changed
   useEffect(() => {
-    const responsive = inkdrop.config.get('chartjs.responsive');
+    const responsive = inkdrop.config.get("chartjs.responsive");
     if (responsive) {
       destroyChart();
       renderChart();
@@ -60,7 +68,7 @@ function ChartComponent(props) {
   }, [divSize.width]);
 
   return (
-    <div class="chartjs" ref={chartRef}>
+    <div className="chartjs" ref={chartRef}>
       {resizeListener}
       {error ? (
         <ChartError error={error} />
@@ -68,16 +76,20 @@ function ChartComponent(props) {
         <img
           src={imageUrl}
           style={{
-            backgroundColor: 'transparent',
-            width: document.getElementsByClassName('mde-preview')[0]
+            backgroundColor: "transparent",
+            width: document.getElementsByClassName("mde-preview")[0]
               .clientWidth,
-            height: 'auto',
+            height: "auto",
           }}
         />
       )}
-      <canvas style={{ display: 'none' }} />
+      <canvas style={{ display: "none" }} />
     </div>
   );
 }
+
+ChartComponent.propTypes = {
+  children: PropTypes.string,
+};
 
 export default ChartComponent;
