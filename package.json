@@ -20,7 +20,7 @@
     "inkdrop": "^4.x"
   },
   "dependencies": {
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "prop-types": "^15.7.2",
     "react-resize-aware": "^3.0.1",
     "relaxed-json": "^1.0.3"
