@@ -77,8 +77,8 @@ function ChartComponent(props) {
           src={imageUrl}
           style={{
             backgroundColor: "transparent",
-            width: document.getElementsByClassName("mde-preview")[0]
-              .clientWidth,
+            width:
+              document.getElementsByClassName("mde-preview")[0].clientWidth,
             height: "auto",
           }}
         />
