@@ -1,10 +1,8 @@
-"use babel";
+import { useState, useEffect, useRef } from "react";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import PropTypes, { string } from "prop-types";
-import Chart from "chart.js";
-import RJSON from "relaxed-json";
-import { useResizeDetector } from "react-resize-detector";
+import Chart from "chart.js/auto";
+import JSON5 from "json5";
+import { withResizeDetector } from "react-resize-detector";
 
 function ChartError(props) {
   return (
@@ -16,81 +14,51 @@ function ChartError(props) {
     </div>
   );
 }
-ChartError.propTypes = {
-  error: PropTypes.shape({
-    name: string,
-    message: string,
-  }),
-};
 
 function ChartComponent(props) {
-  const responsive = inkdrop.config.get("chartjs.responsive");
+  const code = props.children[0];
 
   const [chart, setChart] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState(null);
-  const chartRef = useRef(null);
 
-  const onResize = useCallback(() => {
-    if (responsive) {
-      destroyChart();
-      renderChart();
-    }
-  }, []);
-  const { ref } = useResizeDetector({
-    onResize,
-    targetRef: chartRef,
-  });
+  const canvasRef = useRef(null);
 
   const destroyChart = () => {
     if (chart) chart.destroy();
   };
-
   const renderChart = () => {
     try {
-      const canvas = chartRef.current.lastChild;
-      const ctx = JSON.parse(RJSON.transform(props.children[0]));
-      const newChart = new Chart(canvas, ctx);
-      newChart.update({
-        duration: 0,
-      });
+      const ctx = canvasRef.current;
+      const config = {
+        ...JSON5.parse(code),
+        // Animation must be disabled to convert canvas into image
+        options: { animation: false },
+      };
+      const newChart = new Chart(ctx, config);
       setChart(newChart);
       setImageUrl(newChart.toBase64Image());
       setError(null);
     } catch (e) {
+      if (chart) chart.destroy();
       setChart(null);
+      setImageUrl(null);
       setError(e);
     }
   };
 
-  // render/rerender when the code changed
+  // Rerender when the code content or the window width changes
   useEffect(() => {
     destroyChart();
     renderChart();
-  }, [props.children[0]]);
+  }, [code, props.width]);
 
   return (
-    <div className="chartjs" ref={chartRef}>
-      {error ? (
-        <ChartError error={error} />
-      ) : (
-        <img
-          src={imageUrl}
-          style={{
-            backgroundColor: "transparent",
-            width:
-              document.getElementsByClassName("mde-preview")[0].clientWidth,
-            height: "auto",
-          }}
-        />
-      )}
-      <canvas ref={ref} style={{ display: "none" }} />
+    <div className="chartjs">
+      {error ? <ChartError error={error} /> : <img src={imageUrl} />}
+      <canvas key={code} ref={canvasRef} style={{ display: "none" }} />
     </div>
   );
 }
 
-ChartComponent.propTypes = {
-  children: PropTypes.string,
-};
-
-export default ChartComponent;
+export default withResizeDetector(ChartComponent);

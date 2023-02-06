@@ -1,0 +1,18 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true
+    },
+    "target": "es2022"
+  },
+  "minify": true,
+  "module": {
+    "type": "commonjs"
+  },
+  "env": {
+    "targets": {
+      "electron": "21"
+    }
+  }
+}

@@ -1,5 +1,3 @@
-"use babel";
-
 import ChartComponent from "./chart";
 import { markdownRenderer } from "inkdrop";
 import CodeMirror from "codemirror";
@@ -11,15 +9,6 @@ const CHART_MODE_INFO = {
 };
 
 module.exports = {
-  config: {
-    responsive: {
-      title: "Responsive re-rendering (default: ON)",
-      description: "Re-render a chart when the preview pane is resized",
-      type: "boolean",
-      default: true,
-    },
-  },
-
   activate() {
     if (markdownRenderer) {
       markdownRenderer.remarkCodeComponents["chart"] = ChartComponent;
