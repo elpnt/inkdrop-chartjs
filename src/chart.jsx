@@ -1,10 +1,10 @@
 "use babel";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import PropTypes, { string } from "prop-types";
 import Chart from "chart.js";
 import RJSON from "relaxed-json";
-import useResizeAware from "react-resize-aware";
+import { useResizeDetector } from "react-resize-detector";
 
 function ChartError(props) {
   return (
@@ -16,7 +16,6 @@ function ChartError(props) {
     </div>
   );
 }
-
 ChartError.propTypes = {
   error: PropTypes.shape({
     name: string,
@@ -25,11 +24,23 @@ ChartError.propTypes = {
 };
 
 function ChartComponent(props) {
+  const responsive = inkdrop.config.get("chartjs.responsive");
+
   const [chart, setChart] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState(null);
   const chartRef = useRef(null);
-  const [resizeListener, divSize] = useResizeAware();
+
+  const onResize = useCallback(() => {
+    if (responsive) {
+      destroyChart();
+      renderChart();
+    }
+  }, []);
+  const { ref } = useResizeDetector({
+    onResize,
+    targetRef: chartRef,
+  });
 
   const destroyChart = () => {
     if (chart) chart.destroy();
@@ -37,9 +48,9 @@ function ChartComponent(props) {
 
   const renderChart = () => {
     try {
-      const config = JSON.parse(RJSON.transform(props.children[0]));
       const canvas = chartRef.current.lastChild;
-      const newChart = new Chart(canvas, config);
+      const ctx = JSON.parse(RJSON.transform(props.children[0]));
+      const newChart = new Chart(canvas, ctx);
       newChart.update({
         duration: 0,
       });
@@ -58,18 +69,8 @@ function ChartComponent(props) {
     renderChart();
   }, [props.children[0]]);
 
-  // rerender when the preview pane size changed
-  useEffect(() => {
-    const responsive = inkdrop.config.get("chartjs.responsive");
-    if (responsive) {
-      destroyChart();
-      renderChart();
-    }
-  }, [divSize.width]);
-
   return (
     <div className="chartjs" ref={chartRef}>
-      {resizeListener}
       {error ? (
         <ChartError error={error} />
       ) : (
@@ -83,7 +84,7 @@ function ChartComponent(props) {
           }}
         />
       )}
-      <canvas style={{ display: "none" }} />
+      <canvas ref={ref} style={{ display: "none" }} />
     </div>
   );
 }

@@ -3,7 +3,7 @@
     [
       "@babel/preset-env",
       {
-        "targets": { "electron": "7.1.13" }
+        "targets": { "electron": "12" }
       }
     ],
     "@babel/preset-react"
