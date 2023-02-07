@@ -9,15 +9,45 @@ Inkdrop plugin for drawing charts with [Chart.js](https://www.chartjs.org/)
 
 ## Usage
 
-Following the [Chart.js documentation](https://www.chartjs.org/docs/latest/), write a JSON config to be passed into the `Chart(ctx, config)` class as a second argument `config`.
+Create a fenced code block specifying a `chart` identifier and write a JSON `config` code to be passed into the `new Chart(ctx, config)` class as a second argument.
 
-This plugin parses code block contents by [JSON5](https://json5.org), so there is no need to write strict JSON and it can be written in a nomarl JavaScript object like the above screenshot.
+For example:
+
+````
+```chart
+{
+  type: "bar",
+  data: {
+    labels: ['Red', 'Blue', 'Yellow'],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [300, 50, 100],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+    }]
+  }
+}
+```
+````
+
+This plugin parses code block contents with [JSON5](https://json5.org), so there is no need to write strict JSON and it can be written in a normal JavaScript object.
+
+**NOTE**
+
+This plugin renders a chart as a static image and disables animations. Thus, all animation-related options in your configs will be ignored.
 
 ## Breaking changes
 
-Since the version 2.0 this plugin uses Chart.js v4 on backend. Your previous codes supposing Chart.js v2 may be broken.
+Since the version 2.0 this plugin uses Chart.js v4 on backend. Your previous codes supposing Chart.js v2 may get broken.
 
 ## CHANGELOG
+
+- 2.1.0
+
+  - Make background transparent
 
 - 2.0.0
 
@@ -37,3 +67,7 @@ Since the version 2.0 this plugin uses Chart.js v4 on backend. Your previous cod
 
 - 1.1.0
   - allow Relaxed-JSON format
+
+```
+
+```
