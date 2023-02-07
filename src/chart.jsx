@@ -40,7 +40,6 @@ function ChartComponent(props) {
       setImageUrl(newChart.toBase64Image());
       setError(null);
     } catch (e) {
-      if (chart) chart.destroy();
       setChart(null);
       setImageUrl(null);
       setError(e);
@@ -55,7 +54,11 @@ function ChartComponent(props) {
 
   return (
     <div className="chartjs">
-      {error ? <ChartError error={error} /> : <img src={imageUrl} />}
+      {error ? (
+        <ChartError error={error} />
+      ) : (
+        <img src={imageUrl} style={{ backgroundColor: "transparent" }} />
+      )}
       <canvas key={code} ref={canvasRef} style={{ display: "none" }} />
     </div>
   );
