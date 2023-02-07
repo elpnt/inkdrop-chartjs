@@ -33,7 +33,7 @@ For example:
 ```
 ````
 
-This plugin parses code block contents with [JSON5](https://json5.org), so there is no need to write strict JSON and it can be written in a normal JavaScript object.
+This plugin parses code block contents with [JSON5](https://json5.org), so there is no need to write strict JSON and it can be written in like a normal JavaScript object.
 
 **NOTE**
 
