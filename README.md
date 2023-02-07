@@ -67,7 +67,3 @@ Since the version 2.0 this plugin uses Chart.js v4 on backend. Your previous cod
 
 - 1.1.0
   - allow Relaxed-JSON format
-
-```
-
-```
